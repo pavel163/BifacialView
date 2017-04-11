@@ -1,14 +1,13 @@
 package com.ebr163.bifacialview;
 
-import android.graphics.drawable.BitmapDrawable;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.resource.drawable.GlideDrawable;
 import com.bumptech.glide.request.RequestListener;
 import com.bumptech.glide.request.target.Target;
-import com.ebr163.view.BifacialView;
+import com.ebr163.bifacialview.view.BifacialView;
 
 public class MainActivity extends AppCompatActivity {
 

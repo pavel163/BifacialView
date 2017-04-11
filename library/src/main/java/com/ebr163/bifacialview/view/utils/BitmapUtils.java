@@ -1,4 +1,4 @@
-package com.ebr163.view.utils;
+package com.ebr163.bifacialview.view.utils;
 
 import android.graphics.Bitmap;
 import android.graphics.Canvas;

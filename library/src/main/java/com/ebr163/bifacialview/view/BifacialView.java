@@ -1,4 +1,4 @@
-package com.ebr163.view;
+package com.ebr163.bifacialview.view;
 
 import android.content.Context;
 import android.content.res.TypedArray;
@@ -11,8 +11,8 @@ import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.View;
 
-import static com.ebr163.view.utils.BitmapUtils.drawableToBitmap;
-import static com.ebr163.view.utils.BitmapUtils.resizeDrawable;
+import static com.ebr163.bifacialview.view.utils.BitmapUtils.drawableToBitmap;
+import static com.ebr163.bifacialview.view.utils.BitmapUtils.resizeDrawable;
 
 /**
  * Created by ergashev on 11.04.17.

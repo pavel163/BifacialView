@@ -2,11 +2,11 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <com.ebr163.view.BifacialView
+    <com.ebr163.bifacialview.view.BifacialView
         android:id="@+id/view"
         android:background="@android:color/black"
         android:layout_centerInParent="true"
-        android:layout_width="256dp"
+        android:layout_width="match_parent"
         android:layout_height="256dp"/>
 
 </RelativeLayout>
