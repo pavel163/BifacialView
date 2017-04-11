@@ -107,9 +107,9 @@ public class BifacialView extends View {
             if (delimiterPosition < 0) {
                 delimiterPosition = 0;
             }
-            Bitmap croppedBmp2 = Bitmap.createBitmap(drawableToBitmap(drawableRight, width, height), delimiterPosition, 0, width - delimiterPosition, height);
-            canvas.drawBitmap(croppedBmp2, delimiterPosition, 0, paint);
-            croppedBmp2.recycle();
+            Bitmap croppedBmp = Bitmap.createBitmap(drawableToBitmap(drawableRight, width, height), delimiterPosition, 0, width - delimiterPosition, height);
+            canvas.drawBitmap(croppedBmp, delimiterPosition, 0, paint);
+            croppedBmp.recycle();
         }
     }
 
