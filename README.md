@@ -19,3 +19,17 @@ dependencies {
 ```
 
 ## How to use
+```xml
+<com.ebr163.bifacialview.view.BifacialView
+    android:layout_centerInParent="true"
+    android:layout_width="match_parent"
+    android:layout_height="256dp"
+    app:drawableLeft="@drawable/left"
+    app:drawableRight="@drawable/right"/>
+```
+
+To install the picture programmatically use:
+```java
+    bifacialView.setDrawableLeft(drawableLeft);
+    bifacialView.setDrawableRight(drawableRight);
+```
