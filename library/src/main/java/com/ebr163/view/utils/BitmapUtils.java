@@ -12,7 +12,7 @@ import android.graphics.drawable.Drawable;
 
 public class BitmapUtils {
 
-    public static Bitmap drawableToBitmap(Drawable drawable) {
+    public static Bitmap drawableToBitmap(Drawable drawable, int w, int h) {
         Bitmap bitmap = null;
         if (drawable instanceof BitmapDrawable) {
             BitmapDrawable bitmapDrawable = (BitmapDrawable) drawable;
@@ -24,7 +24,7 @@ public class BitmapUtils {
         if (drawable.getIntrinsicWidth() <= 0 || drawable.getIntrinsicHeight() <= 0) {
             bitmap = Bitmap.createBitmap(1, 1, Bitmap.Config.ARGB_8888);
         } else {
-            bitmap = Bitmap.createBitmap(drawable.getIntrinsicWidth(), drawable.getIntrinsicHeight(), Bitmap.Config.ARGB_8888);
+            bitmap = Bitmap.createBitmap(w, h, Bitmap.Config.ARGB_8888);
         }
         Canvas canvas = new Canvas(bitmap);
         drawable.setBounds(0, 0, canvas.getWidth(), canvas.getHeight());
@@ -40,5 +40,13 @@ public class BitmapUtils {
         Matrix matrix = new Matrix();
         matrix.postScale(scaleWidth, scaleHeight);
         return Bitmap.createBitmap(bm, 0, 0, width, height, matrix, false);
+    }
+
+    public static Drawable resizeDrawable(Drawable drawable, int newWidth, int newHeight) {
+        Bitmap img = Bitmap.createBitmap(newWidth, newHeight, Bitmap.Config.ARGB_8888);
+        Canvas canvas = new Canvas(img);
+        drawable.setBounds(0, 0, img.getWidth(), img.getHeight());
+        drawable.draw(canvas);
+        return drawable;
     }
 }

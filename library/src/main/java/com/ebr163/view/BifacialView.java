@@ -5,7 +5,6 @@ import android.content.res.TypedArray;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Paint;
-import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.support.annotation.Nullable;
 import android.util.AttributeSet;
@@ -13,7 +12,7 @@ import android.view.MotionEvent;
 import android.view.View;
 
 import static com.ebr163.view.utils.BitmapUtils.drawableToBitmap;
-import static com.ebr163.view.utils.BitmapUtils.getResizedBitmap;
+import static com.ebr163.view.utils.BitmapUtils.resizeDrawable;
 
 /**
  * Created by ergashev on 11.04.17.
@@ -50,7 +49,7 @@ public class BifacialView extends View {
         paint = new Paint();
     }
 
-    private void initAttrs(AttributeSet attrs){
+    private void initAttrs(AttributeSet attrs) {
         if (attrs != null) {
             TypedArray a = getContext().getTheme().obtainStyledAttributes(
                     attrs,
@@ -72,11 +71,11 @@ public class BifacialView extends View {
         delimiterPosition = width / 2;
 
         if (drawableLeft != null) {
-            drawableLeft = new BitmapDrawable(getResources(), getResizedBitmap(drawableToBitmap(drawableLeft), width, height));
+            drawableLeft = resizeDrawable(drawableLeft, width, height);
         }
 
         if (drawableRight != null) {
-            drawableRight = new BitmapDrawable(getResources(), getResizedBitmap(drawableToBitmap(drawableRight), width, height));
+            drawableRight = resizeDrawable(drawableRight, width, height);
         }
 
         setMeasuredDimension(width, height);
@@ -99,7 +98,7 @@ public class BifacialView extends View {
             if (width - delimiterPosition < 0) {
                 delimiterPosition = width;
             }
-            Bitmap croppedBmp = Bitmap.createBitmap(drawableToBitmap(drawableLeft), 0, 0, delimiterPosition, height);
+            Bitmap croppedBmp = Bitmap.createBitmap(drawableToBitmap(drawableLeft, width, height), 0, 0, delimiterPosition, height);
             canvas.drawBitmap(croppedBmp, 0, 0, paint);
             croppedBmp.recycle();
         }
@@ -108,41 +107,27 @@ public class BifacialView extends View {
             if (delimiterPosition < 0) {
                 delimiterPosition = 0;
             }
-            Bitmap croppedBmp2 = Bitmap.createBitmap(drawableToBitmap(drawableRight), delimiterPosition, 0, width - delimiterPosition, height);
+            Bitmap croppedBmp2 = Bitmap.createBitmap(drawableToBitmap(drawableRight, width, height), delimiterPosition, 0, width - delimiterPosition, height);
             canvas.drawBitmap(croppedBmp2, delimiterPosition, 0, paint);
             croppedBmp2.recycle();
         }
-
-//        Rect mRect = new Rect(0, 0, delimiterPosition, height);
-//        drawableLeft.setBounds(0, 0, width, height);
-//        canvas.clipRect(mRect);
-//        drawableLeft.draw(canvas);
-//
-//        Rect mRect1 = new Rect(delimiterPosition, 0, width, height);
-//        drawableRight.setBounds(0, 0, width, height);
-//        canvas.clipRect(mRect1);
-//        drawableRight.draw(canvas);
-
-
     }
 
     public void setDrawableLeft(Drawable drawableLeft) {
-        this.drawableLeft = new BitmapDrawable(getResources(), getResizedBitmap(drawableToBitmap(drawableLeft), width, height));
+        if (width > 0 && height > 0) {
+            this.drawableLeft = resizeDrawable(drawableLeft, width, height);
+        } else {
+            this.drawableLeft = drawableLeft;
+        }
         invalidate();
     }
 
     public void setDrawableRight(Drawable drawableRight) {
-        this.drawableRight = new BitmapDrawable(getResources(), getResizedBitmap(drawableToBitmap(drawableRight), width, height));
-        invalidate();
-    }
-
-    public void setBitmapLeft(Bitmap bitmapLeft) {
-        this.drawableLeft = new BitmapDrawable(getResources(), getResizedBitmap(bitmapLeft, width, height));
-        invalidate();
-    }
-
-    public void setBitmapRight(Bitmap bitmapRight) {
-        this.drawableRight = new BitmapDrawable(getResources(), getResizedBitmap(bitmapRight, width, height));
+        if (width > 0 && height > 0) {
+            this.drawableRight = resizeDrawable(drawableRight, width, height);
+        } else {
+            this.drawableRight = drawableRight;
+        }
         invalidate();
     }
 }
