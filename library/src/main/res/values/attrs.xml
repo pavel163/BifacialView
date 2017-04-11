@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="BifacialView">
+        <attr name="drawableLeft" format="reference" />
+        <attr name="drawableRight" format="reference" />
+    </declare-styleable>
+</resources>
