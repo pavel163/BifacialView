@@ -17,7 +17,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         final BifacialView view = (BifacialView) findViewById(R.id.view);
         Glide.with(this)
-                .load("http://sevizm.mos.ru/presscenter/%D0%90%D1%82%D1%82%D1%80%D0%B0%D0%BA%D1%86%D0%B8%D0%BE%D0%BD%D1%8B%20%D0%B2%20%D0%BF%D0%B0%D1%80%D0%BA%D0%B0%D1%85%20%D1%81%20%D1%81%D0%B0%D0%B9%D1%82%D0%B0%20pasmi.ru.jpg")
+                .load("https://files4.adme.ru/files/news/part_149/1494765/29530665-262592-3-0-1491487588-1491487592-650-bf845cd25e-1491558012.jpg")
                 .listener(new RequestListener<String, GlideDrawable>() {
                     @Override
                     public boolean onException(Exception e, String model, Target<GlideDrawable> target, boolean isFirstResource) {
@@ -32,7 +32,7 @@ public class MainActivity extends AppCompatActivity {
                 }).preload();
 
         Glide.with(this)
-                .load("http://s1.fotokto.ru/photo/full/181/1818010.jpg")
+                .load("https://files3.adme.ru/files/news/part_149/1494765/29530265-262592-33-0-1491489159-1491489163-650-8edb1df01d-1491558012.jpg")
                 .listener(new RequestListener<String, GlideDrawable>() {
                     @Override
                     public boolean onException(Exception e, String model, Target<GlideDrawable> target, boolean isFirstResource) {
