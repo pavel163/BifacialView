@@ -33,3 +33,5 @@ To install the picture programmatically use:
     bifacialView.setDrawableLeft(drawableLeft);
     bifacialView.setDrawableRight(drawableRight);
 ```
+## License
+MIT
