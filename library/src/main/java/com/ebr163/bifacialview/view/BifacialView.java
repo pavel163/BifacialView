@@ -7,6 +7,7 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Path;
+import android.graphics.Rect;
 import android.graphics.drawable.Drawable;
 import android.support.annotation.Nullable;
 import android.util.AttributeSet;
@@ -27,9 +28,18 @@ public class BifacialView extends View {
     private int delimiterPosition;
     private int width;
     private int height;
+    private int materialMargin;
+    private int rightTextWith;
+    private int leftTextWith;
+
     private int delimiterColor;
     private int arrowColor;
     private boolean arrowVisible;
+    private float textSize;
+    private int textColor;
+    private String leftText;
+    private String rightText;
+    private Rect textBounds = new Rect();
 
     private Drawable drawableLeft;
     private Drawable drawableRight;
@@ -57,6 +67,7 @@ public class BifacialView extends View {
         paint = new Paint();
         arrowLeft = new Path();
         arrowRight = new Path();
+        materialMargin = dpToPx(getContext(), 16);
     }
 
     private void initAttrs(AttributeSet attrs) {
@@ -71,6 +82,11 @@ public class BifacialView extends View {
                 delimiterColor = a.getColor(R.styleable.BifacialView_delimiterColor, Color.WHITE);
                 arrowColor = a.getColor(R.styleable.BifacialView_arrowColor, Color.WHITE);
                 arrowVisible = a.getBoolean(R.styleable.BifacialView_arrowVisibility, false);
+                leftText = a.getString(R.styleable.BifacialView_leftText);
+                rightText = a.getString(R.styleable.BifacialView_rightText);
+                textColor = a.getColor(R.styleable.BifacialView_textColor, Color.WHITE);
+                textSize = a.getDimensionPixelSize(R.styleable.BifacialView_textSize,
+                        getContext().getResources().getDimensionPixelSize(R.dimen.text_size));
             } finally {
                 a.recycle();
             }
@@ -89,6 +105,17 @@ public class BifacialView extends View {
 
         if (drawableRight != null) {
             drawableRight = resizeDrawable(drawableRight, width, height);
+        }
+
+        paint.setTextSize(textSize);
+        if (rightText != null) {
+            paint.getTextBounds(rightText, 0, rightText.length(), textBounds);
+            rightTextWith = textBounds.width();
+        }
+
+        if (leftText != null) {
+            paint.getTextBounds(leftText, 0, leftText.length(), textBounds);
+            leftTextWith = textBounds.width();
         }
 
         recreateArrowLeft();
@@ -139,6 +166,17 @@ public class BifacialView extends View {
             paint.setStyle(Paint.Style.FILL);
             canvas.drawPath(arrowLeft, paint);
             canvas.drawPath(arrowRight, paint);
+        }
+
+
+        if (materialMargin * 2 + leftTextWith < delimiterPosition && leftText != null) {
+            paint.setColor(textColor);
+            canvas.drawText(leftText, materialMargin, height - materialMargin, paint);
+        }
+
+        if (materialMargin * 2 + rightTextWith < width - delimiterPosition && rightText != null) {
+            paint.setColor(textColor);
+            canvas.drawText(rightText, width - materialMargin - rightTextWith, height - materialMargin, paint);
         }
     }
 

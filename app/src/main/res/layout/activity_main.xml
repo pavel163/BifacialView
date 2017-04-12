@@ -11,6 +11,10 @@
         app:drawableLeft="@drawable/left"
         app:drawableRight="@drawable/right"
         app:arrowVisibility="true"
-        app:arrowColor="@color/colorAccent" />
+        app:leftText="before"
+        app:rightText="after"
+        app:textSize="20sp"
+        app:arrowColor="@color/colorAccent"
+        app:textColor="@color/colorPrimary" />
 
 </RelativeLayout>

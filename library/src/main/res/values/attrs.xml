@@ -6,5 +6,9 @@
         <attr name="delimiterColor" format="color" />
         <attr name="arrowColor" format="color" />
         <attr name="arrowVisibility" format="boolean" />
+        <attr name="textSize" format="dimension" />
+        <attr name="textColor" format="color" />
+        <attr name="leftText" format="string" />
+        <attr name="rightText" format="string" />
     </declare-styleable>
 </resources>
