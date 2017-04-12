@@ -1,6 +1,7 @@
 # BifacialView
 ![Showcase](https://github.com/pavel163/BifacialView/blob/master/media/bifacialview1.gif)
 ![Showcase](https://github.com/pavel163/BifacialView/blob/master/media/bifacialview2.gif)
+![Showcase](https://github.com/pavel163/BifacialView/blob/master/media/bifacialview3.gif)
 
 ## Gradle
 
@@ -14,18 +15,24 @@ allprojects {
 
 ```gradle
 dependencies {
-    compile 'com.github.pavel163:BifacialView:1.0.1'
+    compile 'com.github.pavel163:BifacialView:1.1.0'
 }
 ```
 
 ## How to use
 ```xml
 <com.ebr163.bifacialview.view.BifacialView
-    android:layout_centerInParent="true"
     android:layout_width="match_parent"
-    android:layout_height="256dp"
+    android:layout_height="226dp"
     app:drawableLeft="@drawable/left"
-    app:drawableRight="@drawable/right"/>
+    app:drawableRight="@drawable/right"
+    app:arrowVisibility="true"
+    app:leftText="before"
+    app:rightText="after"
+    app:textSize="20sp"
+    app:delimiterColor="@android:color/white"
+    app:arrowColor="@android:color/holo_orange_light"
+    app:textColor="@android:color/holo_orange_light" />
 ```
 
 To install the picture programmatically use:
