@@ -1,6 +1,5 @@
 # BifacialView
 ![Showcase](https://github.com/pavel163/BifacialView/blob/master/media/bifacialview1.gif)
-![Showcase](https://github.com/pavel163/BifacialView/blob/master/media/bifacialview2.gif)
 ![Showcase](https://github.com/pavel163/BifacialView/blob/master/media/bifacialview3.gif)
 
 ## Gradle
