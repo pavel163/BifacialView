@@ -213,4 +213,14 @@ public class BifacialView extends View {
         }
         invalidate();
     }
+
+    public void setRightText(String text) {
+        this.rightText = text;
+        invalidate();
+    }
+
+    public void setLeftText(String text) {
+        this.leftText = text;
+        invalidate();
+    }
 }
