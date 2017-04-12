@@ -9,6 +9,8 @@
         android:layout_width="match_parent"
         android:layout_height="256dp"
         app:drawableLeft="@drawable/left"
-        app:drawableRight="@drawable/right" />
+        app:drawableRight="@drawable/right"
+        app:arrowVisibility="true"
+        app:arrowColor="@color/colorAccent" />
 
 </RelativeLayout>

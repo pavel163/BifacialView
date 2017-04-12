@@ -28,6 +28,8 @@ public class BifacialView extends View {
     private int width;
     private int height;
     private int delimiterColor;
+    private int arrowColor;
+    private boolean arrowVisible;
 
     private Drawable drawableLeft;
     private Drawable drawableRight;
@@ -67,6 +69,8 @@ public class BifacialView extends View {
                 drawableLeft = a.getDrawable(R.styleable.BifacialView_drawableLeft);
                 drawableRight = a.getDrawable(R.styleable.BifacialView_drawableRight);
                 delimiterColor = a.getColor(R.styleable.BifacialView_delimiterColor, Color.WHITE);
+                arrowColor = a.getColor(R.styleable.BifacialView_arrowColor, Color.WHITE);
+                arrowVisible = a.getBoolean(R.styleable.BifacialView_arrowVisibility, false);
             } finally {
                 a.recycle();
             }
@@ -97,8 +101,10 @@ public class BifacialView extends View {
     public boolean onTouchEvent(MotionEvent event) {
         float x = event.getX();
         delimiterPosition = (int) (x / 1);
-        recreateArrowLeft();
-        recreateArrowRight();
+        if (arrowVisible) {
+            recreateArrowLeft();
+            recreateArrowRight();
+        }
         invalidate();
         return true;
     }
@@ -128,10 +134,12 @@ public class BifacialView extends View {
         paint.setStrokeWidth(3);
         canvas.drawLine(delimiterPosition, 0, delimiterPosition, height, paint);
 
-        paint.setColor(Color.RED);
-        paint.setStyle(Paint.Style.FILL);
-        canvas.drawPath(arrowLeft, paint);
-        canvas.drawPath(arrowRight, paint);
+        if (arrowVisible) {
+            paint.setColor(arrowColor);
+            paint.setStyle(Paint.Style.FILL);
+            canvas.drawPath(arrowLeft, paint);
+            canvas.drawPath(arrowRight, paint);
+        }
     }
 
     private void recreateArrowLeft() {

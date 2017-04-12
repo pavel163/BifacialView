@@ -4,5 +4,7 @@
         <attr name="drawableLeft" format="reference" />
         <attr name="drawableRight" format="reference" />
         <attr name="delimiterColor" format="color" />
+        <attr name="arrowColor" format="color" />
+        <attr name="arrowVisibility" format="boolean" />
     </declare-styleable>
 </resources>
