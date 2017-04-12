@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
+import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.drawable.Drawable;
 import android.support.annotation.Nullable;
@@ -24,6 +25,7 @@ public class BifacialView extends View {
     private int delimiterPosition;
     private int width;
     private int height;
+    private int delimiterColor;
 
     private Drawable drawableLeft;
     private Drawable drawableRight;
@@ -58,6 +60,7 @@ public class BifacialView extends View {
             try {
                 drawableLeft = a.getDrawable(R.styleable.BifacialView_drawableLeft);
                 drawableRight = a.getDrawable(R.styleable.BifacialView_drawableRight);
+                delimiterColor = a.getColor(R.styleable.BifacialView_delimiterColor, Color.WHITE);
             } finally {
                 a.recycle();
             }
@@ -111,6 +114,10 @@ public class BifacialView extends View {
             canvas.drawBitmap(croppedBmp, delimiterPosition, 0, paint);
             croppedBmp.recycle();
         }
+
+        paint.setColor(delimiterColor);
+        paint.setStrokeWidth(3);
+        canvas.drawLine(delimiterPosition, 0, delimiterPosition, height, paint);
     }
 
     public void setDrawableLeft(Drawable drawableLeft) {

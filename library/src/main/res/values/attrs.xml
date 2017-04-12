@@ -3,5 +3,6 @@
     <declare-styleable name="BifacialView">
         <attr name="drawableLeft" format="reference" />
         <attr name="drawableRight" format="reference" />
+        <attr name="delimiterColor" format="color" />
     </declare-styleable>
 </resources>
