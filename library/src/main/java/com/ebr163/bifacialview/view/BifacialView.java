@@ -6,12 +6,14 @@ import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
+import android.graphics.Path;
 import android.graphics.drawable.Drawable;
 import android.support.annotation.Nullable;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.View;
 
+import static com.ebr163.bifacialview.view.utils.BitmapUtils.dpToPx;
 import static com.ebr163.bifacialview.view.utils.BitmapUtils.drawableToBitmap;
 import static com.ebr163.bifacialview.view.utils.BitmapUtils.resizeDrawable;
 
@@ -29,6 +31,8 @@ public class BifacialView extends View {
 
     private Drawable drawableLeft;
     private Drawable drawableRight;
+    private Path arrowLeft;
+    private Path arrowRight;
 
     public BifacialView(Context context) {
         super(context);
@@ -49,6 +53,8 @@ public class BifacialView extends View {
 
     private void init() {
         paint = new Paint();
+        arrowLeft = new Path();
+        arrowRight = new Path();
     }
 
     private void initAttrs(AttributeSet attrs) {
@@ -81,6 +87,9 @@ public class BifacialView extends View {
             drawableRight = resizeDrawable(drawableRight, width, height);
         }
 
+        recreateArrowLeft();
+        recreateArrowRight();
+
         setMeasuredDimension(width, height);
     }
 
@@ -88,6 +97,8 @@ public class BifacialView extends View {
     public boolean onTouchEvent(MotionEvent event) {
         float x = event.getX();
         delimiterPosition = (int) (x / 1);
+        recreateArrowLeft();
+        recreateArrowRight();
         invalidate();
         return true;
     }
@@ -95,8 +106,6 @@ public class BifacialView extends View {
     @Override
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
-        paint.setFilterBitmap(true);
-
         if (delimiterPosition > 0 && drawableLeft != null) {
             if (width - delimiterPosition < 0) {
                 delimiterPosition = width;
@@ -118,6 +127,27 @@ public class BifacialView extends View {
         paint.setColor(delimiterColor);
         paint.setStrokeWidth(3);
         canvas.drawLine(delimiterPosition, 0, delimiterPosition, height, paint);
+
+        paint.setColor(Color.RED);
+        paint.setStyle(Paint.Style.FILL);
+        canvas.drawPath(arrowLeft, paint);
+        canvas.drawPath(arrowRight, paint);
+    }
+
+    private void recreateArrowLeft() {
+        arrowLeft.rewind();
+        arrowLeft.moveTo(delimiterPosition - dpToPx(getContext(), 12), height / 2);
+        arrowLeft.lineTo(delimiterPosition - dpToPx(getContext(), 5), height / 2 - dpToPx(getContext(), 5));
+        arrowLeft.lineTo(delimiterPosition - dpToPx(getContext(), 5), height / 2 + dpToPx(getContext(), 5));
+        arrowLeft.close();
+    }
+
+    private void recreateArrowRight() {
+        arrowRight.rewind();
+        arrowRight.moveTo(delimiterPosition + dpToPx(getContext(), 12), height / 2);
+        arrowRight.lineTo(delimiterPosition + dpToPx(getContext(), 5), height / 2 - dpToPx(getContext(), 5));
+        arrowRight.lineTo(delimiterPosition + dpToPx(getContext(), 5), height / 2 + dpToPx(getContext(), 5));
+        arrowRight.close();
     }
 
     public void setDrawableLeft(Drawable drawableLeft) {
