@@ -31,6 +31,7 @@ public class BifacialView extends View {
     private int materialMargin;
     private int rightTextWith;
     private int leftTextWith;
+    private boolean isMove = false;
 
     private int delimiterColor;
     private int arrowColor;
@@ -132,6 +133,19 @@ public class BifacialView extends View {
             recreateArrowLeft();
             recreateArrowRight();
         }
+
+        switch (event.getAction()) {
+            case MotionEvent.ACTION_DOWN:
+                isMove = true;
+                break;
+            case MotionEvent.ACTION_MOVE:
+                isMove = true;
+                break;
+            case MotionEvent.ACTION_UP:
+            case MotionEvent.ACTION_CANCEL:
+                isMove = false;
+                break;
+        }
         invalidate();
         return true;
     }
@@ -161,7 +175,7 @@ public class BifacialView extends View {
         paint.setStrokeWidth(3);
         canvas.drawLine(delimiterPosition, 0, delimiterPosition, height, paint);
 
-        if (arrowVisible) {
+        if (arrowVisible && !isMove) {
             paint.setColor(arrowColor);
             paint.setStyle(Paint.Style.FILL);
             canvas.drawPath(arrowLeft, paint);
