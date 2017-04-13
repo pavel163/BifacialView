@@ -2,7 +2,6 @@ package com.ebr163.bifacialview.view;
 
 import android.content.Context;
 import android.content.res.TypedArray;
-import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
@@ -15,7 +14,6 @@ import android.view.MotionEvent;
 import android.view.View;
 
 import static com.ebr163.bifacialview.view.utils.BitmapUtils.dpToPx;
-import static com.ebr163.bifacialview.view.utils.BitmapUtils.drawableToBitmap;
 import static com.ebr163.bifacialview.view.utils.BitmapUtils.resizeDrawable;
 
 /**
@@ -157,18 +155,7 @@ public class BifacialView extends View {
             if (width - delimiterPosition < 0) {
                 delimiterPosition = width;
             }
-            Bitmap croppedBmp = Bitmap.createBitmap(drawableToBitmap(drawableLeft, width, height), 0, 0, delimiterPosition, height);
-            canvas.drawBitmap(croppedBmp, 0, 0, paint);
-            croppedBmp.recycle();
-        }
-
-        if (width - delimiterPosition > 0 && drawableRight != null) {
-            if (delimiterPosition < 0) {
-                delimiterPosition = 0;
-            }
-            Bitmap croppedBmp = Bitmap.createBitmap(drawableToBitmap(drawableRight, width, height), delimiterPosition, 0, width - delimiterPosition, height);
-            canvas.drawBitmap(croppedBmp, delimiterPosition, 0, paint);
-            croppedBmp.recycle();
+            drawableLeft.draw(canvas);
         }
 
         paint.setColor(delimiterColor);
@@ -179,13 +166,25 @@ public class BifacialView extends View {
             paint.setColor(arrowColor);
             paint.setStyle(Paint.Style.FILL);
             canvas.drawPath(arrowLeft, paint);
-            canvas.drawPath(arrowRight, paint);
         }
-
 
         if (materialMargin * 2 + leftTextWith < delimiterPosition && leftText != null) {
             paint.setColor(textColor);
             canvas.drawText(leftText, materialMargin, height - materialMargin, paint);
+        }
+
+        if (width - delimiterPosition > 0 && drawableRight != null) {
+            if (delimiterPosition < 0) {
+                delimiterPosition = 0;
+            }
+            canvas.clipRect(delimiterPosition, 0, width, height);
+            drawableRight.draw(canvas);
+        }
+
+        if (arrowVisible && !isMove) {
+            paint.setColor(arrowColor);
+            paint.setStyle(Paint.Style.FILL);
+            canvas.drawPath(arrowRight, paint);
         }
 
         if (materialMargin * 2 + rightTextWith < width - delimiterPosition && rightText != null) {
