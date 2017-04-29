@@ -1,22 +1,22 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:background="@android:color/black"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    android:orientation="vertical">
 
-    <com.ebr163.bifacialview.view.BifacialView
-        android:id="@+id/view"
-        android:layout_centerInParent="true"
-        android:layout_width="match_parent"
-        android:layout_height="226dp"
-        app:drawableLeft="@drawable/left"
-        app:drawableRight="@drawable/right"
-        app:arrowVisibility="true"
-        app:leftText="before"
-        app:rightText="after"
-        app:textSize="20sp"
-        app:delimiterColor="@android:color/white"
-        app:arrowColor="@android:color/holo_orange_light"
-        app:textColor="@android:color/holo_orange_light" />
+    <Button
+        android:id="@+id/simple_screen"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:onClick="onClick"
+        android:text="Simple" />
 
-</RelativeLayout>
+    <Button
+        android:id="@+id/vp_screen"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:onClick="onClick"
+        android:text="ViewPager" />
+
+</LinearLayout>

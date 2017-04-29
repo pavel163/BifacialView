@@ -21,7 +21,13 @@ import static com.ebr163.bifacialview.view.utils.BitmapUtils.resizeDrawable;
  */
 public class BifacialView extends View {
 
+    public enum TouchMode {
+        ALL, DELIMITER
+    }
+
     private Paint paint;
+
+    private TouchMode touchMode = TouchMode.ALL;
 
     private int delimiterPosition;
     private int width;
@@ -86,6 +92,12 @@ public class BifacialView extends View {
                 textColor = a.getColor(R.styleable.BifacialView_textColor, Color.WHITE);
                 textSize = a.getDimensionPixelSize(R.styleable.BifacialView_textSize,
                         getContext().getResources().getDimensionPixelSize(R.dimen.text_size));
+
+                if (a.getInteger(R.styleable.BifacialView_touchMode, 0) == 0) {
+                    touchMode = TouchMode.ALL;
+                } else {
+                    touchMode = TouchMode.DELIMITER;
+                }
             } finally {
                 a.recycle();
             }
@@ -126,7 +138,6 @@ public class BifacialView extends View {
     @Override
     public boolean onTouchEvent(MotionEvent event) {
         float x = event.getX();
-        delimiterPosition = (int) (x / 1);
         if (arrowVisible) {
             recreateArrowLeft();
             recreateArrowRight();
@@ -134,16 +145,25 @@ public class BifacialView extends View {
 
         switch (event.getAction()) {
             case MotionEvent.ACTION_DOWN:
-                isMove = true;
-                break;
+                if (touchMode == TouchMode.DELIMITER) {
+                    if (x > delimiterPosition + 20 || x < delimiterPosition - 20) {
+                        return false;
+                    } else {
+                        getParent().requestDisallowInterceptTouchEvent(true);
+                    }
+                }
             case MotionEvent.ACTION_MOVE:
                 isMove = true;
                 break;
             case MotionEvent.ACTION_UP:
             case MotionEvent.ACTION_CANCEL:
                 isMove = false;
+                if (touchMode == TouchMode.DELIMITER) {
+                    getParent().requestDisallowInterceptTouchEvent(false);
+                }
                 break;
         }
+        delimiterPosition = (int) (x / 1);
         invalidate();
         return true;
     }

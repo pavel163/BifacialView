@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">BifacialView</string>
+    <string name="title_activity_view_pager">ViewPagerActivity</string>
 </resources>
