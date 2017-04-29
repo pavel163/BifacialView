@@ -14,7 +14,7 @@ allprojects {
 
 ```gradle
 dependencies {
-    compile 'com.github.pavel163:BifacialView:1.1.1'
+    compile 'com.github.pavel163:BifacialView:1.2.0'
 }
 ```
 
@@ -29,6 +29,7 @@ dependencies {
     app:leftText="before"
     app:rightText="after"
     app:textSize="20sp"
+    app:touchMode="delimiter"
     app:delimiterColor="@android:color/white"
     app:arrowColor="@android:color/holo_orange_light"
     app:textColor="@android:color/holo_orange_light" />
