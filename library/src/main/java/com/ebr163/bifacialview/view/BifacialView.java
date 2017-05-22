@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.Canvas;
 import android.graphics.Color;
+import android.graphics.CornerPathEffect;
 import android.graphics.Paint;
 import android.graphics.Path;
 import android.graphics.Rect;
@@ -18,6 +19,8 @@ import static com.ebr163.bifacialview.view.utils.BitmapUtils.resizeDrawable;
 
 /**
  * Created by ergashev on 11.04.17.
+ * This view displays a clipped drawable on the right over another drawable
+ * Sliding the delimiter to the right reveals more of the left view
  */
 public class BifacialView extends View {
 
@@ -38,8 +41,14 @@ public class BifacialView extends View {
     private boolean isMove = false;
 
     private int delimiterColor;
+    private int delimiterWidth;
     private int arrowColor;
     private boolean arrowVisible;
+    private int arrowWidth;
+    private int arrowHeight;
+    private int arrowStrokeWidth;
+    private boolean arrowFill;
+    private int arrowMargin;
     private float textSize;
     private int textColor;
     private String leftText;
@@ -50,6 +59,7 @@ public class BifacialView extends View {
     private Drawable drawableRight;
     private Path arrowLeft;
     private Path arrowRight;
+    private CornerPathEffect cornerPathEffect;
 
     public BifacialView(Context context) {
         super(context);
@@ -81,10 +91,12 @@ public class BifacialView extends View {
                     attrs,
                     R.styleable.BifacialView,
                     0, 0);
+            int arrowCornerRadius;
             try {
                 drawableLeft = a.getDrawable(R.styleable.BifacialView_drawableLeft);
                 drawableRight = a.getDrawable(R.styleable.BifacialView_drawableRight);
                 delimiterColor = a.getColor(R.styleable.BifacialView_delimiterColor, Color.WHITE);
+                delimiterWidth = a.getDimensionPixelSize(R.styleable.BifacialView_delimiterWidth,3);
                 arrowColor = a.getColor(R.styleable.BifacialView_arrowColor, Color.WHITE);
                 arrowVisible = a.getBoolean(R.styleable.BifacialView_arrowVisibility, false);
                 leftText = a.getString(R.styleable.BifacialView_leftText);
@@ -92,6 +104,12 @@ public class BifacialView extends View {
                 textColor = a.getColor(R.styleable.BifacialView_textColor, Color.WHITE);
                 textSize = a.getDimensionPixelSize(R.styleable.BifacialView_textSize,
                         getContext().getResources().getDimensionPixelSize(R.dimen.text_size));
+                arrowWidth = a.getDimensionPixelSize(R.styleable.BifacialView_arrowWidth, dpToPx(getContext(),12));
+                arrowHeight = a.getDimensionPixelSize(R.styleable.BifacialView_arrowHeight, dpToPx(getContext(),10));
+                arrowMargin = a.getDimensionPixelSize(R.styleable.BifacialView_arrowMargin, dpToPx(getContext(), 5));
+                arrowStrokeWidth = a.getDimensionPixelSize(R.styleable.BifacialView_arrowStrokeWidth, 5);
+                arrowFill = a.getBoolean(R.styleable.BifacialView_arrowFill, true);
+                arrowCornerRadius = a.getDimensionPixelSize(R.styleable.BifacialView_arrowCornerRadius,0);
 
                 if (a.getInteger(R.styleable.BifacialView_touchMode, 0) == 0) {
                     touchMode = TouchMode.ALL;
@@ -101,6 +119,8 @@ public class BifacialView extends View {
             } finally {
                 a.recycle();
             }
+
+            cornerPathEffect = new CornerPathEffect(arrowCornerRadius);
         }
     }
 
@@ -179,17 +199,23 @@ public class BifacialView extends View {
         }
 
         paint.setColor(delimiterColor);
-        paint.setStrokeWidth(3);
+        paint.setStrokeWidth(delimiterWidth);
+        paint.setStyle(Paint.Style.STROKE);
         canvas.drawLine(delimiterPosition, 0, delimiterPosition, height, paint);
 
         if (arrowVisible && !isMove) {
             paint.setColor(arrowColor);
-            paint.setStyle(Paint.Style.FILL);
+            paint.setStyle(arrowFill ? Paint.Style.FILL : Paint.Style.STROKE);
+            paint.setStrokeWidth(arrowStrokeWidth);
+            paint.setPathEffect(cornerPathEffect);
+            paint.setAntiAlias(true);
             canvas.drawPath(arrowLeft, paint);
+            paint.setPathEffect(null);
         }
 
         if (materialMargin * 2 + leftTextWith < delimiterPosition && leftText != null) {
             paint.setColor(textColor);
+            paint.setStyle(Paint.Style.FILL);
             canvas.drawText(leftText, materialMargin, height - materialMargin, paint);
         }
 
@@ -197,35 +223,40 @@ public class BifacialView extends View {
             if (delimiterPosition < 0) {
                 delimiterPosition = 0;
             }
-            canvas.clipRect(delimiterPosition, 0, width, height);
+            canvas.clipRect(delimiterPosition + delimiterWidth/2, 0, width, height);
             drawableRight.draw(canvas);
         }
 
         if (arrowVisible && !isMove) {
             paint.setColor(arrowColor);
-            paint.setStyle(Paint.Style.FILL);
+            paint.setStyle(arrowFill ? Paint.Style.FILL : Paint.Style.STROKE);
+            paint.setStrokeWidth(arrowStrokeWidth);
+            paint.setPathEffect(cornerPathEffect);
+            paint.setAntiAlias(true);
             canvas.drawPath(arrowRight, paint);
+            paint.setPathEffect(null);
         }
 
         if (materialMargin * 2 + rightTextWith < width - delimiterPosition && rightText != null) {
             paint.setColor(textColor);
+            paint.setStyle(Paint.Style.FILL);
             canvas.drawText(rightText, width - materialMargin - rightTextWith, height - materialMargin, paint);
         }
     }
 
     private void recreateArrowLeft() {
         arrowLeft.rewind();
-        arrowLeft.moveTo(delimiterPosition - dpToPx(getContext(), 12), height / 2);
-        arrowLeft.lineTo(delimiterPosition - dpToPx(getContext(), 5), height / 2 - dpToPx(getContext(), 5));
-        arrowLeft.lineTo(delimiterPosition - dpToPx(getContext(), 5), height / 2 + dpToPx(getContext(), 5));
+        arrowLeft.moveTo(delimiterPosition - delimiterWidth/2 - arrowMargin - arrowWidth, height / 2);
+        arrowLeft.lineTo(delimiterPosition - delimiterWidth/2 - arrowMargin, height / 2 - arrowHeight/2);
+        arrowLeft.lineTo(delimiterPosition - delimiterWidth/2 - arrowMargin, height / 2 + arrowHeight/2);
         arrowLeft.close();
     }
 
     private void recreateArrowRight() {
         arrowRight.rewind();
-        arrowRight.moveTo(delimiterPosition + dpToPx(getContext(), 12), height / 2);
-        arrowRight.lineTo(delimiterPosition + dpToPx(getContext(), 5), height / 2 - dpToPx(getContext(), 5));
-        arrowRight.lineTo(delimiterPosition + dpToPx(getContext(), 5), height / 2 + dpToPx(getContext(), 5));
+        arrowRight.moveTo(delimiterPosition + delimiterWidth/2 + arrowMargin + arrowWidth, height / 2);
+        arrowRight.lineTo(delimiterPosition + delimiterWidth/2 + arrowMargin, height / 2 - arrowHeight/2);
+        arrowRight.lineTo(delimiterPosition + delimiterWidth/2 + arrowMargin, height / 2 + arrowHeight/2);
         arrowRight.close();
     }
 

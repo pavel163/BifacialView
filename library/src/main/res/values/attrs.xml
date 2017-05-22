@@ -4,7 +4,14 @@
         <attr name="drawableLeft" format="reference" />
         <attr name="drawableRight" format="reference" />
         <attr name="delimiterColor" format="color" />
+        <attr name="delimiterWidth" format="dimension" />
         <attr name="arrowColor" format="color" />
+        <attr name="arrowWidth" format="dimension"/>
+        <attr name="arrowHeight" format="dimension"/>
+        <attr name="arrowFill" format="boolean"/>
+        <attr name="arrowStrokeWidth" format="dimension"/>
+        <attr name="arrowCornerRadius" format="dimension"/>
+        <attr name="arrowMargin" format="dimension"/>
         <attr name="arrowVisibility" format="boolean" />
         <attr name="textSize" format="dimension" />
         <attr name="textColor" format="color" />
