@@ -11,7 +11,6 @@ import android.graphics.Rect;
 import android.graphics.drawable.Drawable;
 import android.support.annotation.Nullable;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 
@@ -20,6 +19,8 @@ import static com.ebr163.bifacialview.view.utils.BitmapUtils.resizeDrawable;
 
 /**
  * Created by ergashev on 11.04.17.
+ * This view displays a clipped drawable on the right over another drawable
+ * Sliding the delimiter to the right reveals more of the left view
  */
 public class BifacialView extends View {
 
@@ -47,7 +48,6 @@ public class BifacialView extends View {
     private int arrowHeight;
     private int arrowStrokeWidth;
     private boolean arrowFill;
-    private int arrowCornerRadius;
     private int arrowMargin;
     private float textSize;
     private int textColor;
@@ -91,6 +91,7 @@ public class BifacialView extends View {
                     attrs,
                     R.styleable.BifacialView,
                     0, 0);
+            int arrowCornerRadius;
             try {
                 drawableLeft = a.getDrawable(R.styleable.BifacialView_drawableLeft);
                 drawableRight = a.getDrawable(R.styleable.BifacialView_drawableRight);
