@@ -209,6 +209,7 @@ public class BifacialView extends View {
             paint.setPathEffect(cornerPathEffect);
             paint.setAntiAlias(true);
             canvas.drawPath(arrowLeft, paint);
+            paint.setPathEffect(null);
         }
 
         if (materialMargin * 2 + leftTextWith < delimiterPosition && leftText != null) {
@@ -232,6 +233,7 @@ public class BifacialView extends View {
             paint.setPathEffect(cornerPathEffect);
             paint.setAntiAlias(true);
             canvas.drawPath(arrowRight, paint);
+            paint.setPathEffect(null);
         }
 
         if (materialMargin * 2 + rightTextWith < width - delimiterPosition && rightText != null) {
