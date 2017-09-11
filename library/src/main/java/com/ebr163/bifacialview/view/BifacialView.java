@@ -42,6 +42,7 @@ public class BifacialView extends View {
 
     private int delimiterColor;
     private int delimiterWidth;
+    private int delimiterPadding;
     private int arrowColor;
     private boolean arrowVisible;
     private int arrowWidth;
@@ -97,6 +98,8 @@ public class BifacialView extends View {
                 drawableRight = a.getDrawable(R.styleable.BifacialView_drawableRight);
                 delimiterColor = a.getColor(R.styleable.BifacialView_delimiterColor, Color.WHITE);
                 delimiterWidth = a.getDimensionPixelSize(R.styleable.BifacialView_delimiterWidth,3);
+                delimiterPadding = a.getDimensionPixelSize(R.styleable.BifacialView_delimiterPadding,
+                        20);
                 arrowColor = a.getColor(R.styleable.BifacialView_arrowColor, Color.WHITE);
                 arrowVisible = a.getBoolean(R.styleable.BifacialView_arrowVisibility, false);
                 leftText = a.getString(R.styleable.BifacialView_leftText);
@@ -166,7 +169,7 @@ public class BifacialView extends View {
         switch (event.getAction()) {
             case MotionEvent.ACTION_DOWN:
                 if (touchMode == TouchMode.DELIMITER) {
-                    if (x > delimiterPosition + 20 || x < delimiterPosition - 20) {
+                    if (x > delimiterPosition + delimiterPadding || x < delimiterPosition - delimiterPadding) {
                         return false;
                     } else {
                         getParent().requestDisallowInterceptTouchEvent(true);
