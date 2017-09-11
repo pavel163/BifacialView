@@ -168,22 +168,18 @@ public class BifacialView extends View {
 
         switch (event.getAction()) {
             case MotionEvent.ACTION_DOWN:
-                if (touchMode == TouchMode.DELIMITER) {
-                    if (x > delimiterPosition + delimiterPadding || x < delimiterPosition - delimiterPadding) {
-                        return false;
-                    } else {
-                        getParent().requestDisallowInterceptTouchEvent(true);
-                    }
+                if ((touchMode == TouchMode.DELIMITER) &&
+                        (x > delimiterPosition + delimiterPadding || x < delimiterPosition - delimiterPadding)) {
+                    return false;
                 }
+                getParent().requestDisallowInterceptTouchEvent(true);
             case MotionEvent.ACTION_MOVE:
                 isMove = true;
                 break;
             case MotionEvent.ACTION_UP:
             case MotionEvent.ACTION_CANCEL:
                 isMove = false;
-                if (touchMode == TouchMode.DELIMITER) {
-                    getParent().requestDisallowInterceptTouchEvent(false);
-                }
+                getParent().requestDisallowInterceptTouchEvent(false);
                 break;
         }
         delimiterPosition = (int) (x / 1);
