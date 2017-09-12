@@ -5,6 +5,7 @@
         <attr name="drawableRight" format="reference" />
         <attr name="delimiterColor" format="color" />
         <attr name="delimiterWidth" format="dimension" />
+        <attr name="delimiterPadding" format="dimension" />
         <attr name="arrowColor" format="color" />
         <attr name="arrowWidth" format="dimension"/>
         <attr name="arrowHeight" format="dimension"/>
