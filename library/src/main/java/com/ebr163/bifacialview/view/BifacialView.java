@@ -171,7 +171,7 @@ public class BifacialView extends View {
                 // for ViewPager and RecyclerView
                 if (touchMode == TouchMode.DELIMITER) {
                     if (x > delimiterPosition + delimiterPadding || x < delimiterPosition - delimiterPadding) {
-                        return false;
+                        return super.onTouchEvent(event);
                     } else {
                         getParent().requestDisallowInterceptTouchEvent(true);
                     }

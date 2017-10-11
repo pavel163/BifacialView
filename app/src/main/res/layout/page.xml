@@ -15,6 +15,7 @@
         app:arrowVisibility="true"
         app:drawableLeft="@drawable/left"
         app:drawableRight="@drawable/right"
+        app:touchMode="delimiter"
         app:leftText="before"
         app:rightText="after"
         app:delimiterPadding="20dp"

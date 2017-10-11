@@ -22,7 +22,8 @@
             android:name=".ViewPagerActivity"
             android:label="@string/title_activity_view_pager"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".SimpleActivity"></activity>
+        <activity android:name=".SimpleActivity" />
+        <activity android:name=".recyclerview.RecyclerViewActivity"></activity>
     </application>
 
 </manifest>
