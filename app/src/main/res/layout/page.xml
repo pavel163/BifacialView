@@ -17,7 +17,7 @@
         app:drawableRight="@drawable/right"
         app:leftText="before"
         app:rightText="after"
-        app:touchMode="delimiter"
+        app:delimiterPadding="20dp"
         app:textColor="@color/colorPrimary"
         app:textSize="20sp" />
 
