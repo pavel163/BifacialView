@@ -23,7 +23,8 @@
             android:label="@string/title_activity_view_pager"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".SimpleActivity" />
-        <activity android:name=".recyclerview.RecyclerViewActivity"></activity>
+        <activity android:name=".recyclerview.RecyclerViewActivity" />
+        <activity android:name=".custom.CustomActivity"></activity>
     </application>
 
 </manifest>
