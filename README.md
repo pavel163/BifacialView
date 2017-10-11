@@ -14,7 +14,7 @@ allprojects {
 
 ```gradle
 dependencies {
-    compile 'com.github.pavel163:BifacialView:1.3.1'
+    compile 'com.github.pavel163:BifacialView:1.3.2'
 }
 ```
 
@@ -62,8 +62,16 @@ You can use xml attributes to control the appearance of arrows
     app:leftText="before"
     app:rightText="after"
     app:textColor="@color/colorPrimary"
-    app:textSize="20sp" />
+    app:textSize="20sp"
+    app:delimiterPadding="20dp"/>
 ```
+## TouchMode
+
+```ALL``` - reacts to the touch in any part of view.
+
+```DELIMITER``` - reacts to a touch in the delimiter area.
+
+### For correct operation in ViewPager and RecyclerView, use TouchMode = DELIMITER
 
 ## License
 MIT
