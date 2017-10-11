@@ -68,6 +68,7 @@ You can use xml attributes to control the appearance of arrows
 ## TouchMode
 
 ALl - reacts to the touch in any part of view.
+
 DELIMITER - reacts to a touch in the delimiter area.
 
 ### For correct operation in ViewPager and RecyclerView, use TouchMode = DELIMITER
