@@ -297,6 +297,11 @@ public class BifacialView extends View {
         invalidate();
     }
 
+    public void setDelimiterPosition(int percent) {
+        this.percentDelimiterPosition = percent;
+        invalidate();
+    }
+
     @Nullable
     @Override
     protected Parcelable onSaveInstanceState() {
