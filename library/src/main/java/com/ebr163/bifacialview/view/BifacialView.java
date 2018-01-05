@@ -9,6 +9,8 @@ import android.graphics.Paint;
 import android.graphics.Path;
 import android.graphics.Rect;
 import android.graphics.drawable.Drawable;
+import android.os.Bundle;
+import android.os.Parcelable;
 import android.support.annotation.Nullable;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
@@ -32,12 +34,14 @@ public class BifacialView extends View {
 
     private TouchMode touchMode = TouchMode.ALL;
 
-    private int delimiterPosition;
+    private int delimiterPosition = -1;
+    private int percentDelimiterPosition = 50;
+
     private int width;
     private int height;
     private int materialMargin;
-    private int rightTextWith;
-    private int leftTextWith;
+    private int rightTextWidth;
+    private int leftTextWidth;
     private boolean isMove = false;
 
     private int delimiterColor;
@@ -80,6 +84,7 @@ public class BifacialView extends View {
     }
 
     private void init() {
+        setSaveEnabled(true);
         paint = new Paint();
         arrowLeft = new Path();
         arrowRight = new Path();
@@ -131,7 +136,8 @@ public class BifacialView extends View {
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
         width = View.MeasureSpec.getSize(widthMeasureSpec);
         height = View.MeasureSpec.getSize(heightMeasureSpec);
-        delimiterPosition = width / 2;
+
+        delimiterPosition = percentDelimiterPosition * width / 100;
 
         if (drawableLeft != null) {
             drawableLeft = resizeDrawable(drawableLeft, width, height);
@@ -144,12 +150,12 @@ public class BifacialView extends View {
         paint.setTextSize(textSize);
         if (rightText != null) {
             paint.getTextBounds(rightText, 0, rightText.length(), textBounds);
-            rightTextWith = textBounds.width();
+            rightTextWidth = textBounds.width();
         }
 
         if (leftText != null) {
             paint.getTextBounds(leftText, 0, leftText.length(), textBounds);
-            leftTextWith = textBounds.width();
+            leftTextWidth = textBounds.width();
         }
 
         recreateArrowLeft();
@@ -186,6 +192,7 @@ public class BifacialView extends View {
                 break;
         }
         delimiterPosition = (int) (x / 1);
+        percentDelimiterPosition = delimiterPosition * 100 / width;
         invalidate();
         return true;
     }
@@ -215,7 +222,7 @@ public class BifacialView extends View {
             paint.setPathEffect(null);
         }
 
-        if (materialMargin * 2 + leftTextWith < delimiterPosition && leftText != null) {
+        if (materialMargin * 2 + leftTextWidth < delimiterPosition && leftText != null) {
             paint.setColor(textColor);
             paint.setStyle(Paint.Style.FILL);
             canvas.drawText(leftText, materialMargin, height - materialMargin, paint);
@@ -239,10 +246,10 @@ public class BifacialView extends View {
             paint.setPathEffect(null);
         }
 
-        if (materialMargin * 2 + rightTextWith < width - delimiterPosition && rightText != null) {
+        if (materialMargin * 2 + rightTextWidth < width - delimiterPosition && rightText != null) {
             paint.setColor(textColor);
             paint.setStyle(Paint.Style.FILL);
-            canvas.drawText(rightText, width - materialMargin - rightTextWith, height - materialMargin, paint);
+            canvas.drawText(rightText, width - materialMargin - rightTextWidth, height - materialMargin, paint);
         }
     }
 
@@ -288,5 +295,24 @@ public class BifacialView extends View {
     public void setLeftText(String text) {
         this.leftText = text;
         invalidate();
+    }
+
+    @Nullable
+    @Override
+    protected Parcelable onSaveInstanceState() {
+        Bundle bundle = new Bundle();
+        bundle.putParcelable("superState", super.onSaveInstanceState());
+        bundle.putInt("value", percentDelimiterPosition);
+        return bundle;
+    }
+
+    @Override
+    protected void onRestoreInstanceState(Parcelable state) {
+        if (state instanceof Bundle) {
+            Bundle bundle = (Bundle) state;
+            percentDelimiterPosition = bundle.getInt("value");
+            state = bundle.getParcelable("superState");
+        }
+        super.onRestoreInstanceState(state);
     }
 }

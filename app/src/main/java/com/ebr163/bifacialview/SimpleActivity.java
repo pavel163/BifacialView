@@ -15,7 +15,7 @@ public class SimpleActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_simple);
-        final BifacialView view = (BifacialView) findViewById(R.id.view);
+        final BifacialView view = findViewById(R.id.view);
         Glide.with(this)
                 .load("https://files4.adme.ru/files/news/part_149/1494765/29530665-262592-3-0-1491487588-1491487592-650-bf845cd25e-1491558012.jpg")
                 .listener(new RequestListener<String, GlideDrawable>() {
