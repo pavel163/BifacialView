@@ -1,9 +1,11 @@
 package com.ebr163.bifacialview.recyclerview;
 
-import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
+import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.ebr163.bifacialview.R;
 
@@ -13,8 +15,8 @@ import com.ebr163.bifacialview.R;
 
 public class CustomRVAdapter extends RecyclerView.Adapter<CustomRVAdapter.ViewHolder> {
 
-    public static class ViewHolder extends RecyclerView.ViewHolder {
-        public ViewHolder(View v) {
+    static class ViewHolder extends RecyclerView.ViewHolder {
+        ViewHolder(View v) {
             super(v);
         }
     }
@@ -22,14 +24,15 @@ public class CustomRVAdapter extends RecyclerView.Adapter<CustomRVAdapter.ViewHo
     public CustomRVAdapter() {
     }
 
+    @NonNull
     @Override
-    public CustomRVAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public CustomRVAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.item, parent, false);
         return new ViewHolder(v);
     }
 
     @Override
-    public void onBindViewHolder(ViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
 
     }
 

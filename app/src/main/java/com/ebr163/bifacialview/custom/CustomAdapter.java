@@ -1,11 +1,13 @@
 package com.ebr163.bifacialview.custom;
 
 import android.content.Context;
-import android.support.v4.view.PagerAdapter;
-import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
+import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.RecyclerView;
+import androidx.viewpager.widget.PagerAdapter;
 
 import com.ebr163.bifacialview.R;
 import com.ebr163.bifacialview.recyclerview.CustomRVAdapter;
@@ -14,20 +16,21 @@ import com.ebr163.bifacialview.recyclerview.CustomRVAdapter;
  * Created by Bakht on 11.10.2017.
  */
 
-public class CustomAdapter extends PagerAdapter {
+class CustomAdapter extends PagerAdapter {
 
     private Context mContext;
 
-    public CustomAdapter(Context context) {
+    CustomAdapter(Context context) {
         mContext = context;
     }
 
+    @NonNull
     @Override
-    public Object instantiateItem(ViewGroup collection, int position) {
+    public Object instantiateItem(@NonNull ViewGroup collection, int position) {
         LayoutInflater inflater = LayoutInflater.from(mContext);
         ViewGroup layout = (ViewGroup) inflater.inflate(R.layout.item_custom, collection, false);
 
-        RecyclerView recyclerView = ((RecyclerView) layout.findViewById(R.id.recyclerview));
+        RecyclerView recyclerView = layout.findViewById(R.id.recyclerview);
         recyclerView.setAdapter(new CustomRVAdapter());
 
         collection.addView(layout);
@@ -35,7 +38,7 @@ public class CustomAdapter extends PagerAdapter {
     }
 
     @Override
-    public void destroyItem(ViewGroup collection, int position, Object view) {
+    public void destroyItem(@NonNull ViewGroup collection, int position, @NonNull Object view) {
         collection.removeView((View) view);
     }
 
@@ -45,7 +48,7 @@ public class CustomAdapter extends PagerAdapter {
     }
 
     @Override
-    public boolean isViewFromObject(View view, Object object) {
+    public boolean isViewFromObject(@NonNull View view, @NonNull Object object) {
         return view == object;
     }
 

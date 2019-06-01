@@ -10,16 +10,9 @@ android {
         versionCode 1
         versionName "1.0"
     }
-
-    buildTypes {
-        release {
-            minifyEnabled false
-            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
-        }
-    }
 }
 
 dependencies {
-    implementation "com.android.support:appcompat-v7:$project.ext.appcompat"
+    implementation "androidx.appcompat:appcompat:$project.ext.androidX"
     testImplementation 'junit:junit:4.12'
 }

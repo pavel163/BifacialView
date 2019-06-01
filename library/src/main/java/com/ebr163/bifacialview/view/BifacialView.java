@@ -1,5 +1,6 @@
 package com.ebr163.bifacialview.view;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.Canvas;
@@ -11,10 +12,11 @@ import android.graphics.Rect;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.os.Parcelable;
-import android.support.annotation.Nullable;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.View;
+
+import androidx.annotation.Nullable;
 
 import static com.ebr163.bifacialview.view.utils.BitmapUtils.dpToPx;
 import static com.ebr163.bifacialview.view.utils.BitmapUtils.resizeDrawable;
@@ -58,7 +60,7 @@ public class BifacialView extends View {
     private int textColor;
     private String leftText;
     private String rightText;
-    private Rect textBounds = new Rect();
+    private final Rect textBounds = new Rect();
 
     private Drawable drawableLeft;
     private Drawable drawableRight;
@@ -164,6 +166,7 @@ public class BifacialView extends View {
         setMeasuredDimension(width, height);
     }
 
+    @SuppressLint("ClickableViewAccessibility")
     @Override
     public boolean onTouchEvent(MotionEvent event) {
         float x = event.getX();
@@ -174,7 +177,6 @@ public class BifacialView extends View {
 
         switch (event.getAction()) {
             case MotionEvent.ACTION_DOWN:
-                // for ViewPager and RecyclerView
                 if (touchMode == TouchMode.DELIMITER) {
                     if (x > delimiterPosition + delimiterPadding || x < delimiterPosition - delimiterPadding) {
                         return super.onTouchEvent(event);
@@ -255,17 +257,17 @@ public class BifacialView extends View {
 
     private void recreateArrowLeft() {
         arrowLeft.rewind();
-        arrowLeft.moveTo(delimiterPosition - delimiterWidth / 2 - arrowMargin - arrowWidth, height / 2);
-        arrowLeft.lineTo(delimiterPosition - delimiterWidth / 2 - arrowMargin, height / 2 - arrowHeight / 2);
-        arrowLeft.lineTo(delimiterPosition - delimiterWidth / 2 - arrowMargin, height / 2 + arrowHeight / 2);
+        arrowLeft.moveTo(delimiterPosition - delimiterWidth / 2 - arrowMargin - arrowWidth, height / 2f);
+        arrowLeft.lineTo(delimiterPosition - delimiterWidth / 2 - arrowMargin, height / 2f - arrowHeight / 2f);
+        arrowLeft.lineTo(delimiterPosition - delimiterWidth / 2 - arrowMargin, height / 2f + arrowHeight / 2f);
         arrowLeft.close();
     }
 
     private void recreateArrowRight() {
         arrowRight.rewind();
-        arrowRight.moveTo(delimiterPosition + delimiterWidth / 2 + arrowMargin + arrowWidth, height / 2);
-        arrowRight.lineTo(delimiterPosition + delimiterWidth / 2 + arrowMargin, height / 2 - arrowHeight / 2);
-        arrowRight.lineTo(delimiterPosition + delimiterWidth / 2 + arrowMargin, height / 2 + arrowHeight / 2);
+        arrowRight.moveTo(delimiterPosition + delimiterWidth / 2 + arrowMargin + arrowWidth, height / 2f);
+        arrowRight.lineTo(delimiterPosition + delimiterWidth / 2 + arrowMargin, height / 2f - arrowHeight / 2f);
+        arrowRight.lineTo(delimiterPosition + delimiterWidth / 2 + arrowMargin, height / 2f + arrowHeight / 2f);
         arrowRight.close();
     }
 
