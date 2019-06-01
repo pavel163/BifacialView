@@ -14,7 +14,7 @@ allprojects {
 
 ```gradle
 dependencies {
-    implementation 'com.github.pavel163:BifacialView:1.4.0'
+    implementation 'com.github.pavel163:BifacialView:1.4.1'
 }
 ```
 
